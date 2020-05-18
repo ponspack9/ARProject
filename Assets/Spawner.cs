@@ -24,7 +24,6 @@ public class Spawner : MonoBehaviour
     [Header("Tweaks")]
     public bool option1 = false;
     public float spawn_rate = 0.5f;
-    public float missile_speed = 4.0f;
 
     [Header("Colors")]
     public Material[] materials;
@@ -44,6 +43,7 @@ public class Spawner : MonoBehaviour
 
         if (time >= spawn_rate)
         {
+            float missile_speed = Random.Range(5.0f, 10.0f);
             if (option1)
             {
 
@@ -67,7 +67,9 @@ public class Spawner : MonoBehaviour
 
                 ball.transform.position = RandomPointInBounds(spawn_area.bounds);
                 ball.GetComponent<Rigidbody>().velocity = velocity * missile_speed;
-                ball.GetComponent<MeshRenderer>().material = materials[Random.Range(0, materials.Length)];
+                int color = Random.Range(0, materials.Length);
+                ball.GetComponent<MeshRenderer>().material = materials[color];
+                ball.GetComponent<Missile>().color = color;
 
                 Destroy(ball, 6.0f);
             }

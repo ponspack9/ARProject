@@ -40,17 +40,24 @@ public class Player : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.tag == "Missile")
+        if (transform.tag == "Player" && collision.transform.tag == "Missile")
         {
             if (collision.gameObject.GetComponent<Missile>().color == this.color)
             {
-                points += collision.gameObject.GetComponent<Missile>().points;
+                points += 100;
                 score.text = "SCORE: " + points.ToString();
+                Debug.Log("Collision: " + gameObject.name);
+                Debug.Log("Collision2: " + collision.gameObject.name);
+                Destroy(collision.gameObject);
             }
             else
             {
                 game_over = true;
             }
         }
+    }
+    void OnCollisionExit(Collision collisionInfo)
+    {
+        print("Collision Out: " + gameObject.name);
     }
 }
