@@ -6,12 +6,16 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     public Spawner spawner;
+    public Slider slider;
     public Text score;
+    private Rigidbody rigid;
+
     private int points = 0;
 
     public int color = 0;
     private float time = 0;
 
+    private Vector3 original_pos = Vector3.zero;
     public float change_rate = 4.0f;
     public bool game_over = false;
 
@@ -19,18 +23,30 @@ public class Player : MonoBehaviour
     void Start()
     {
         score.text = "SCORE: 0";
+        rigid = GetComponent<Rigidbody>();
         
     }
 
     // Update is called once per frame
     void Update()
     {
+        if ((original_pos - transform.position).magnitude > 9)
+        {
+            Debug.Log("RESTART");
+        }
         time += Time.deltaTime;
         if (time >= change_rate)
         {
-            ChangeColor();
+            //ChangeColor();
             time = 0;
         }
+    }
+
+    public void Shoot()
+    {
+        original_pos = transform.position;
+        rigid.AddForce(new Vector3(0, 0, slider.value));
+
     }
 
     void ChangeColor()

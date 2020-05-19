@@ -17,73 +17,53 @@ public class Spawner : MonoBehaviour
     }
 
     [Header("Prefabs")]
-    public GameObject player;
-    public GameObject missile;
+    public GameObject ball;
+    public List<GameObject> balls;
 
+    public int number_balls = 5;
+    public float offset = 10;
 
     [Header("Tweaks")]
-    public bool option1 = false;
-    public float spawn_rate = 0.5f;
+    public float angular_velocity = 0.5f;
 
     [Header("Colors")]
     public Material[] materials;
 
-    // Not shown
-    private BoxCollider spawn_area;
     private float time = 0;
 
     void Start()
     {
-        spawn_area = GetComponent<BoxCollider>();
+        SpawnBalls();
     }
 
     void Update()
     {
-        time += Time.deltaTime;
+        //time += Time.deltaTime;
 
-        if (time >= spawn_rate)
-        {
-            float missile_speed = Random.Range(5.0f, 10.0f);
-            if (option1)
-            {
-
-                //Spawn
-                Vector3 pos = RandomPointInBounds(spawn_area.bounds);
-
-                GameObject ball = Instantiate<GameObject>(missile, pos, Quaternion.identity);
-                Vector3 velocity = (player.transform.position - ball.transform.position).normalized;
-
-                ball.GetComponent<Rigidbody>().velocity = velocity * missile_speed;
-                ball.GetComponent<MeshRenderer>().material = materials[Random.Range(0, materials.Length)];
-
-                Destroy(ball, 6.0f);
-            }
-            else
-            {
-                //Spawn
-                GameObject ball = Instantiate<GameObject>(missile, transform.position, Quaternion.identity);
-
-                Vector3 velocity = (player.transform.position - transform.position).normalized;
-
-                ball.transform.position = RandomPointInBounds(spawn_area.bounds);
-                ball.GetComponent<Rigidbody>().velocity = velocity * missile_speed;
-                int color = Random.Range(0, materials.Length);
-                ball.GetComponent<MeshRenderer>().material = materials[color];
-                ball.GetComponent<Missile>().color = color;
-
-                Destroy(ball, 6.0f);
-            }
-
-            time = 0;
-        }
+        //if (time >= angular_velocity)
+        //{
+        //    //Move balls
+        //    for (int i = 0; i < number_balls; i++)
+        //    {
+        //        balls[i].transform.position.x = 
+        //    }
+        //    time = 0;
+        //}
     }
-    public static Vector3 RandomPointInBounds(Bounds bounds)
+    void SpawnBalls()
     {
-        return new Vector3(
-            Random.Range(bounds.min.x, bounds.max.x),
-            Random.Range(bounds.min.y, bounds.max.y),
-            Random.Range(bounds.min.z, bounds.max.z)
-        );
+        Vector3 position = transform.position;
+        float dx = 2 * Mathf.PI / number_balls;
+        float angle = 0;
+        for (int i = 0; i < number_balls; i++, angle += dx)
+        {
+            position.x = offset * Mathf.Cos(angle);
+            position.z = offset * Mathf.Sin(angle);
+
+            balls.Add(Instantiate<GameObject>(ball, position, Quaternion.identity));
+            balls[balls.Count-1].GetComponent<MeshRenderer>().material = materials[Random.Range(0, 6)];
+            balls[balls.Count-1].GetComponent<Missile>().angle = angle;
+        }
     }
 
 }
