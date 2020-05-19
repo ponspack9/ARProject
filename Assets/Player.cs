@@ -48,12 +48,13 @@ public class Player : MonoBehaviour
                 score.text = "SCORE: " + points.ToString();
                 Debug.Log("Collision: " + gameObject.name);
                 Debug.Log("Collision2: " + collision.gameObject.name);
-                Destroy(collision.gameObject);
+                
             }
             else
             {
                 game_over = true;
             }
+            Destroy(collision.gameObject);
         }
     }
     void OnCollisionExit(Collision collisionInfo)
