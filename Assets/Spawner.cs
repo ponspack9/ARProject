@@ -26,7 +26,7 @@ public class Spawner : MonoBehaviour
     public float amplitude = 4;
 
     [Header("Tweaks")]
-    public float angular_velocity = 0.5f;
+    private float angular_velocity = 0.5f;
     private float angle = 0;
     [Header("Colors")]
     public Material[] materials;
@@ -48,17 +48,19 @@ public class Spawner : MonoBehaviour
         transform.Rotate(transform.up,angular_velocity);
         transform.position = new Vector3(marker.transform.position.x, player.transform.position.y, marker.transform.position.z);
         //time += Time.deltaTime;
-
-        //if (time >= angular_velocity)
-        //{
-        //    //Move balls
-        //    for (int i = 0; i < number_balls; i++)
-        //    {
-        //        balls[i].transform.position.x = 
-        //    }
-        //    time = 0;
-        //}
+        time += Time.deltaTime;
+        GetComponent<MeshRenderer>().material.SetFloat("_OFFSET", time);
+        if (time >= 10000)
+        {
+            //Move balls
+            //for (int i = 0; i < number_balls; i++)
+            //{
+            //    balls[i].transform.position.x =
+            //}
+            time = 0;
+        }
     }
+    
     public void SpawnBalls()
     {
 

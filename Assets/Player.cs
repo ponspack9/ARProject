@@ -52,9 +52,9 @@ public class Player : MonoBehaviour
 
     }
 
-    void ChangeColor()
+    public void ChangeColor()
     {
-        color = Random.Range(0, (int)Spawner.Colors.MAX);
+        color = (color +1)%(int)Spawner.Colors.MAX;
         GetComponent<MeshRenderer>().material = spawner.materials[color];
     }
     private void OnCollisionEnter(Collision collision)
@@ -73,11 +73,12 @@ public class Player : MonoBehaviour
             {
                 game_over = true;
             }
+            transform.localPosition = Vector3.zero;
+            rigid.ResetInertiaTensor();
+            rigid.ResetCenterOfMass();
+            rigid.angularVelocity = Vector3.zero;
+            rigid.velocity = Vector3.zero;
             Destroy(collision.gameObject);
         }
-    }
-    void OnCollisionExit(Collision collisionInfo)
-    {
-        print("Collision Out: " + gameObject.name);
     }
 }
