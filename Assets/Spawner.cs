@@ -22,7 +22,7 @@ public class Spawner : MonoBehaviour
     public GameObject player;
     public GameObject marker;
 
-    public int number_balls = 5;
+    public int number_balls = 3;
     public float amplitude = 4;
 
     [Header("Tweaks")]
@@ -46,7 +46,9 @@ public class Spawner : MonoBehaviour
         //transform.position = marker.transform.position;
 
         transform.Rotate(transform.up,angular_velocity);
+
         transform.position = new Vector3(marker.transform.position.x, player.transform.position.y, marker.transform.position.z);
+
         //time += Time.deltaTime;
         time += Time.deltaTime;
         GetComponent<MeshRenderer>().material.SetFloat("_OFFSET", time);
@@ -78,10 +80,10 @@ public class Spawner : MonoBehaviour
             position.z = transform.position.z + amplitude * Mathf.Sin(angle);
 
             balls.Add(Instantiate<GameObject>(ball, position, Quaternion.identity));
-            balls[balls.Count-1].GetComponent<MeshRenderer>().material = materials[Random.Range(0, 6)];
-            balls[balls.Count-1].GetComponent<Missile>().angle = angle;
-            balls[balls.Count - 1].GetComponent<Missile>().offset = transform.position;
-            balls[balls.Count - 1].GetComponent<Missile>().spawner = this;
+
+            int color = Random.Range(0, materials.Length);
+            balls[balls.Count - 1].GetComponent<MeshRenderer>().material = materials[color];
+            balls[balls.Count - 1].GetComponent<Missile>().color = color;
             balls[balls.Count - 1].transform.SetParent(this.transform);
         }
     }

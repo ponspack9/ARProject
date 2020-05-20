@@ -10,37 +10,41 @@ public class Player : MonoBehaviour
     public Text score;
     private Rigidbody rigid;
 
-    private int points = 0;
+    public int points = 0;
 
     public int color = 0;
     private float time = 0;
+    public float original_distance = 1000;
+    public float distance = 0;
+    private bool collision = false;
 
     private Vector3 original_pos = Vector3.zero;
-    public float change_rate = 4.0f;
-    public bool game_over = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        score.text = "SCORE: 0";
-        original_pos = transform.position;
+        
         rigid = GetComponent<Rigidbody>();
         
+    }
+    public void StartGame()
+    {
+        score.text = "SCORE: 0";
+        //ResetPlayer();
+        original_pos = transform.position;
+        original_distance = (spawner.transform.position - transform.position).magnitude;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if ((original_pos - transform.position).magnitude > 9)
+        distance = (original_pos - transform.position).magnitude;
+        if (distance > original_distance - 5)
         {
-            Debug.Log("RESTART");
+
+            ResetPlayer();
         }
-        time += Time.deltaTime;
-        if (time >= change_rate)
-        {
-            //ChangeColor();
-            time = 0;
-        }
+
     }
 
     public void Shoot()
@@ -59,6 +63,8 @@ public class Player : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
+        if (GameController.gameOver) return;
+
         if (transform.tag == "Player" && collision.transform.tag == "Missile")
         {
             if (collision.gameObject.GetComponent<Missile>().color == this.color)
@@ -67,18 +73,24 @@ public class Player : MonoBehaviour
                 score.text = "SCORE: " + points.ToString();
                 Debug.Log("Collision: " + gameObject.name);
                 Debug.Log("Collision2: " + collision.gameObject.name);
-                
+
             }
             else
             {
-                game_over = true;
+                GameController.gameOver = true;
             }
-            transform.localPosition = Vector3.zero;
-            rigid.ResetInertiaTensor();
-            rigid.ResetCenterOfMass();
-            rigid.angularVelocity = Vector3.zero;
-            rigid.velocity = Vector3.zero;
+            //ResetPlayer();
             Destroy(collision.gameObject);
         }
+    }
+
+    private void ResetPlayer()
+    {
+        transform.localPosition = Vector3.zero;
+        rigid.ResetInertiaTensor();
+        rigid.ResetCenterOfMass();
+        rigid.angularVelocity = Vector3.zero;
+        rigid.velocity = Vector3.zero;
+        transform.localRotation = Quaternion.identity;
     }
 }
