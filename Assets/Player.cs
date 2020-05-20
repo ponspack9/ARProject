@@ -46,7 +46,9 @@ public class Player : MonoBehaviour
     public void Shoot()
     {
         original_pos = transform.position;
-        rigid.AddForce(new Vector3(0, 0, -slider.value));
+        
+        //rigid.AddForce(new Vector3(0, 0, -slider.value));
+        rigid.AddForce(transform.forward.normalized * slider.value);
 
     }
 

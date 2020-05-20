@@ -19,7 +19,7 @@ public class Spawner : MonoBehaviour
     [Header("Prefabs")]
     public GameObject ball;
     public List<GameObject> balls;
-    public GameObject m_Camera;
+    public GameObject player;
     public GameObject marker;
 
     public int number_balls = 5;
@@ -43,8 +43,10 @@ public class Spawner : MonoBehaviour
         //transform.rotation = Quaternion.LookRotation(Vector3.up, Vector3.forward);
         //transform.LookAt(transform.position + m_Camera.transform.rotation * Vector3.forward,
         //m_Camera.transform.rotation * Vector3.up);
+        //transform.position = marker.transform.position;
 
         transform.Rotate(transform.up,angular_velocity);
+        transform.position = new Vector3(marker.transform.position.x, player.transform.position.y, marker.transform.position.z);
         //time += Time.deltaTime;
 
         //if (time >= angular_velocity)
@@ -59,7 +61,6 @@ public class Spawner : MonoBehaviour
     }
     public void SpawnBalls()
     {
-        transform.position = marker.transform.position;
 
         for (int i = 0; i < balls.Count; i++)
         {
