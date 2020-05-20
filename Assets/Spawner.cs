@@ -19,13 +19,15 @@ public class Spawner : MonoBehaviour
     [Header("Prefabs")]
     public GameObject ball;
     public List<GameObject> balls;
+    public GameObject m_Camera;
+    public GameObject marker;
 
     public int number_balls = 5;
-    public float offset = 10;
+    public float amplitude = 4;
 
     [Header("Tweaks")]
     public float angular_velocity = 0.5f;
-
+    private float angle = 0;
     [Header("Colors")]
     public Material[] materials;
 
@@ -33,11 +35,16 @@ public class Spawner : MonoBehaviour
 
     void Start()
     {
-        SpawnBalls();
+        //SpawnBalls();
     }
 
     void Update()
     {
+        //transform.rotation = Quaternion.LookRotation(Vector3.up, Vector3.forward);
+        //transform.LookAt(transform.position + m_Camera.transform.rotation * Vector3.forward,
+        //m_Camera.transform.rotation * Vector3.up);
+
+        transform.Rotate(transform.up,angular_velocity);
         //time += Time.deltaTime;
 
         //if (time >= angular_velocity)
@@ -50,19 +57,29 @@ public class Spawner : MonoBehaviour
         //    time = 0;
         //}
     }
-    void SpawnBalls()
+    public void SpawnBalls()
     {
+        transform.position = marker.transform.position;
+
+        for (int i = 0; i < balls.Count; i++)
+        {
+            Destroy(balls[i]);
+        }
+
         Vector3 position = transform.position;
         float dx = 2 * Mathf.PI / number_balls;
         float angle = 0;
         for (int i = 0; i < number_balls; i++, angle += dx)
         {
-            position.x = offset * Mathf.Cos(angle);
-            position.z = offset * Mathf.Sin(angle);
+            position.x = transform.position.x + amplitude * Mathf.Cos(angle);
+            position.z = transform.position.z + amplitude * Mathf.Sin(angle);
 
             balls.Add(Instantiate<GameObject>(ball, position, Quaternion.identity));
             balls[balls.Count-1].GetComponent<MeshRenderer>().material = materials[Random.Range(0, 6)];
             balls[balls.Count-1].GetComponent<Missile>().angle = angle;
+            balls[balls.Count - 1].GetComponent<Missile>().offset = transform.position;
+            balls[balls.Count - 1].GetComponent<Missile>().spawner = this;
+            balls[balls.Count - 1].transform.SetParent(this.transform);
         }
     }
 
