@@ -3,11 +3,11 @@
 A game made with [Unity](https://unity.com/) & [Vuforia](https://developer.vuforia.com/) for Augmented Reality assignment by [CITM](https://www.citm.upc.edu/) students.
 
 ## Resources
-![Target 1](https://raw.githubusercontent.com/ponspack9/ARProject/master/marker22.png?token=AIUVYMVFS2EGIIIB6DPOKPS6Z6FYS)
-![Target 2](https://raw.githubusercontent.com/ponspack9/ARProject/master/safsafassafs.png?token=AIUVYMRGLYVCPUNLMDT34HK6Z6F4C)
+![Target 1](https://raw.githubusercontent.com/ponspack9/ARProject/master/ARProject/Images/marker22.png)
+![Target 2](https://raw.githubusercontent.com/ponspack9/ARProject/master/ARProject/Images/safsafassafs.png)
 
 ## Gameplay
-[![Video](https://raw.githubusercontent.com/ponspack9/ARProject/master/mini.PNG?token=AIUVYMUEBA3OPSPSWOQMK7S6Z7WL6)](https://youtu.be/-Ax0FVF-nG0)
+[![Video](https://raw.githubusercontent.com/ponspack9/ARProject/master/ARProject/Images/mini.PNG)](https://youtu.be/-Ax0FVF-nG0)
 
 ## Presentation
 - [Slides](https://docs.google.com/presentation/d/1I3ifBwplq89zeDOP4N2r_hiOe_4ZMER3JLUW2pj_MEQ/edit?usp=sharing)
