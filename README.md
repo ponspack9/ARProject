@@ -10,7 +10,7 @@ A game made with [Unity](https://unity.com/) & [Vuforia](https://developer.vufor
 - [Slides](https://docs.google.com/presentation/d/1I3ifBwplq89zeDOP4N2r_hiOe_4ZMER3JLUW2pj_MEQ/edit?usp=sharing)
 
 ## Gameplay
-- [![Video](https://raw.githubusercontent.com/ponspack9/ARProject/master/safsafassafs.png?token=AIUVYMRGLYVCPUNLMDT34HK6Z6F4C)](https://youtu.be/-Ax0FVF-nG0)
+[![Video](https://raw.githubusercontent.com/ponspack9/ARProject/master/mini.PNG?token=AIUVYMUEBA3OPSPSWOQMK7S6Z7WL6)](https://youtu.be/-Ax0FVF-nG0)
 
 ## Team
 - [Oscar Pons](https://github.com/ponspack9)
