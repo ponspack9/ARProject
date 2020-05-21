@@ -9,10 +9,12 @@ public class Player : MonoBehaviour
     public Slider slider;
     public Text score;
     private Rigidbody rigid;
+    public ParticleSystem particles;
 
     public int points = 0;
 
     public int color = 0;
+    public int collisions = 1;
     private float time = 0;
     public float original_distance = 1000;
     public float distance = 0;
@@ -31,6 +33,7 @@ public class Player : MonoBehaviour
     {
         score.text = "SCORE: 0";
         points = 0;
+        collisions = 1;
         //ChangeColor();
         ResetPlayer();
         original_pos = transform.position;
@@ -56,6 +59,7 @@ public class Player : MonoBehaviour
         //rigid.AddForce(new Vector3(0, 0, -slider.value));
         rigid.AddForce(transform.forward.normalized * slider.value);
         shot = true;
+        collisions = 1;
 
     }
 
@@ -75,8 +79,13 @@ public class Player : MonoBehaviour
         {
             if (shot && collision.gameObject.GetComponent<Missile>().color == this.color)
             {
-                points += 100;
+                points += collisions * 100;
+                collisions++;
                 score.text = "SCORE: " + points.ToString();
+                particles.transform.position = collision.transform.position;
+                particles.GetComponent<ParticleSystemRenderer>().material = spawner.materials[this.color];
+                Instantiate(particles);//.GetComponent<ParticleSystem>().Play() ;
+
                 //Debug.Log("Collision: " + gameObject.name);
                 //Debug.Log("Collision2: " + collision.gameObject.name);
 
@@ -104,6 +113,7 @@ public class Player : MonoBehaviour
         rigid.velocity = Vector3.zero;
         transform.localRotation = Quaternion.identity;
         shot = false;
+        collisions = 1;
 
         List<int> colors = new List<int>();
 

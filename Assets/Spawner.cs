@@ -30,7 +30,6 @@ public class Spawner : MonoBehaviour
     [Header("Colors")]
     public Material[] materials;
 
-    private float time = 0;
     public bool level_up = false;
 
 
@@ -40,13 +39,6 @@ public class Spawner : MonoBehaviour
 
         transform.position = new Vector3(marker.transform.position.x, player.transform.position.y, marker.transform.position.z);
 
-        //time += Time.deltaTime;
-        //time += Time.deltaTime;
-        //GetComponent<MeshRenderer>().material.SetFloat("_OFFSET", time);
-        //if (time >= 10000)
-        //{
-        //    time = 0;
-        //}
         if (level_up)
         {
             Invoke("LevelUp", 1.5f);
@@ -58,13 +50,16 @@ public class Spawner : MonoBehaviour
     public void LevelUp()
     {
         number_balls++;
-        angular_velocity += 0.25f;
+        angular_velocity += 0.2f;
+        if (number_balls % 3 == 0)
+            amplitude += 0.1f;
         SpawnBalls();
         player.GetComponent<Player>().ResetPlayer();
     }
     public void StartGame()
     {
         number_balls = 3;
+        amplitude = 1;
         angular_velocity = 0.5f;
         SpawnBalls();
     }

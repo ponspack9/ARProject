@@ -233,7 +233,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1000
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 374
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3095,6 +3095,12 @@ PrefabInstance:
       propertyPath: slider
       value: 
       objectReference: {fileID: 174189680}
+    - target: {fileID: 7620761891764678730, guid: 3ec1d0d8192de9146af120a21129e427,
+        type: 3}
+      propertyPath: particles
+      value: 
+      objectReference: {fileID: 4458176392659576988, guid: 88069656587e21b40897fe623aa234d7,
+        type: 3}
     - target: {fileID: 7620761891764678729, guid: 3ec1d0d8192de9146af120a21129e427,
         type: 3}
       propertyPath: m_LocalPosition.x
