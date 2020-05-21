@@ -22,29 +22,20 @@ public class Spawner : MonoBehaviour
     public GameObject player;
     public GameObject marker;
 
-    public int number_balls = 3;
-    public float amplitude = 4;
+    private int number_balls = 3;
+    private float amplitude = 1f;
 
     [Header("Tweaks")]
     private float angular_velocity = 0.5f;
-    private float angle = 0;
     [Header("Colors")]
     public Material[] materials;
 
     private float time = 0;
+    public bool level_up = false;
 
-    void Start()
-    {
-        //SpawnBalls();
-    }
 
     void Update()
     {
-        //transform.rotation = Quaternion.LookRotation(Vector3.up, Vector3.forward);
-        //transform.LookAt(transform.position + m_Camera.transform.rotation * Vector3.forward,
-        //m_Camera.transform.rotation * Vector3.up);
-        //transform.position = marker.transform.position;
-
         transform.Rotate(transform.up,angular_velocity);
 
         transform.position = new Vector3(marker.transform.position.x, player.transform.position.y, marker.transform.position.z);
@@ -54,15 +45,28 @@ public class Spawner : MonoBehaviour
         GetComponent<MeshRenderer>().material.SetFloat("_OFFSET", time);
         if (time >= 10000)
         {
-            //Move balls
-            //for (int i = 0; i < number_balls; i++)
-            //{
-            //    balls[i].transform.position.x =
-            //}
             time = 0;
         }
+        if (level_up)
+        {
+            Invoke("LevelUp", 1.5f);
+            level_up = false;
+        }
+
+        
     }
-    
+    public void LevelUp()
+    {
+        number_balls++;
+        angular_velocity += 0.25f;
+        SpawnBalls();
+    }
+    public void StartGame()
+    {
+        number_balls = 3;
+        angular_velocity = 0.5f;
+        SpawnBalls();
+    }
     public void SpawnBalls()
     {
 
@@ -70,6 +74,7 @@ public class Spawner : MonoBehaviour
         {
             Destroy(balls[i]);
         }
+        balls.Clear();
 
         Vector3 position = transform.position;
         float dx = 2 * Mathf.PI / number_balls;

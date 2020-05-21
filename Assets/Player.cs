@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     private float time = 0;
     public float original_distance = 1000;
     public float distance = 0;
-    private bool collision = false;
+    private bool shot = false;
 
     private Vector3 original_pos = Vector3.zero;
 
@@ -30,7 +30,8 @@ public class Player : MonoBehaviour
     public void StartGame()
     {
         score.text = "SCORE: 0";
-        //ResetPlayer();
+        ChangeColor();
+        ResetPlayer();
         original_pos = transform.position;
         original_distance = (spawner.transform.position - transform.position).magnitude;
     }
@@ -39,7 +40,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         distance = (original_pos - transform.position).magnitude;
-        if (distance > original_distance - 5)
+        if (distance > original_distance+10)
         {
 
             ResetPlayer();
@@ -53,6 +54,7 @@ public class Player : MonoBehaviour
         
         //rigid.AddForce(new Vector3(0, 0, -slider.value));
         rigid.AddForce(transform.forward.normalized * slider.value);
+        shot = true;
 
     }
 
@@ -65,15 +67,19 @@ public class Player : MonoBehaviour
     {
         if (GameController.gameOver) return;
 
-        if (transform.tag == "Player" && collision.transform.tag == "Missile")
+        if (collision.transform.tag == "Missile")
         {
-            if (collision.gameObject.GetComponent<Missile>().color == this.color)
+            if (shot && collision.gameObject.GetComponent<Missile>().color == this.color)
             {
                 points += 100;
                 score.text = "SCORE: " + points.ToString();
                 Debug.Log("Collision: " + gameObject.name);
                 Debug.Log("Collision2: " + collision.gameObject.name);
 
+                spawner.balls.RemoveAt(spawner.balls.Count-1);
+
+                if (spawner.balls.Count <= 0)
+                    spawner.level_up = true;
             }
             else
             {
@@ -92,5 +98,6 @@ public class Player : MonoBehaviour
         rigid.angularVelocity = Vector3.zero;
         rigid.velocity = Vector3.zero;
         transform.localRotation = Quaternion.identity;
+        shot = false;
     }
 }

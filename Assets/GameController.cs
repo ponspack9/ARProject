@@ -16,17 +16,18 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        text_gameOver.SetActive(false);
+        mainmenu.SetActive(true);
     }
 
     public void StartGame()
     {
         text_gameOver.SetActive(false);
         mainmenu.SetActive(false);
-        gameOver = false;
-        spawn.SpawnBalls();
+        spawn.StartGame();
         player.StartGame();
         text_Start.SetActive(false);
+        gameOver = false;
 
     }
 
