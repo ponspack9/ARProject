@@ -30,7 +30,8 @@ public class Player : MonoBehaviour
     public void StartGame()
     {
         score.text = "SCORE: 0";
-        ChangeColor();
+        points = 0;
+        //ChangeColor();
         ResetPlayer();
         original_pos = transform.position;
         original_distance = (spawner.transform.position - transform.position).magnitude;
@@ -58,9 +59,12 @@ public class Player : MonoBehaviour
 
     }
 
-    public void ChangeColor()
+    public void ChangeColor(int c = -1)
     {
-        color = (color +1)%(int)Spawner.Colors.MAX;
+        if (c == -1)
+            color = (color + 1) % (int)Spawner.Colors.MAX;
+        else
+            color = c;
         GetComponent<MeshRenderer>().material = spawner.materials[color];
     }
     private void OnCollisionEnter(Collision collision)
@@ -90,8 +94,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void ResetPlayer()
+    public void ResetPlayer()
     {
+
         transform.localPosition = Vector3.zero;
         rigid.ResetInertiaTensor();
         rigid.ResetCenterOfMass();
@@ -99,5 +104,16 @@ public class Player : MonoBehaviour
         rigid.velocity = Vector3.zero;
         transform.localRotation = Quaternion.identity;
         shot = false;
+
+        List<int> colors = new List<int>();
+
+        for (int i=0;i<spawner.balls.Count;i++)
+        {
+            int c = spawner.balls[i].GetComponent<Missile>().color;
+            if(!colors.Contains(c))
+                colors.Add(c);
+        }
+
+        ChangeColor(colors[Random.Range(0, colors.Count)]);
     }
 }

@@ -60,6 +60,7 @@ public class Spawner : MonoBehaviour
         number_balls++;
         angular_velocity += 0.25f;
         SpawnBalls();
+        player.GetComponent<Player>().ResetPlayer();
     }
     public void StartGame()
     {
