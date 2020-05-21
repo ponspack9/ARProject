@@ -23,6 +23,7 @@ public class Spawner : MonoBehaviour
     public GameObject marker;
 
     private int number_balls = 3;
+    public int number_balls_on_lost = -1;
     private float amplitude = 1f;
 
     [Header("Tweaks")]
@@ -65,6 +66,7 @@ public class Spawner : MonoBehaviour
     }
     public void SpawnBalls()
     {
+        int n = (number_balls_on_lost > 0) ? number_balls_on_lost :number_balls;
 
         for (int i = 0; i < balls.Count; i++)
         {
@@ -75,7 +77,7 @@ public class Spawner : MonoBehaviour
         Vector3 position = transform.position;
         float dx = 2 * Mathf.PI / number_balls;
         float angle = 0;
-        for (int i = 0; i < number_balls; i++, angle += dx)
+        for (int i = 0; i < n; i++, angle += dx)
         {
             position.x = transform.position.x + amplitude * Mathf.Cos(angle);
             position.z = transform.position.z + amplitude * Mathf.Sin(angle);
@@ -87,6 +89,13 @@ public class Spawner : MonoBehaviour
             balls[balls.Count - 1].GetComponent<Missile>().color = color;
             balls[balls.Count - 1].transform.SetParent(this.transform);
         }
+        number_balls_on_lost = -1;
+        player.GetComponent<Player>().ResetPlayer();
+    }
+
+    public void SaveState()
+    {
+        number_balls_on_lost = balls.Count;
     }
 
 }

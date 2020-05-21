@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameOver = false;
         text_gameOver.SetActive(false);
         mainmenu.SetActive(true);
     }
