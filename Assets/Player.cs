@@ -11,6 +11,10 @@ public class Player : MonoBehaviour
     private Rigidbody rigid;
     public ParticleSystem particles;
 
+    public AudioSource audio_shoot;
+    public AudioSource audio_match;
+    public AudioSource audio_error;
+
     public int points = 0;
 
     public int color = 0;
@@ -55,7 +59,7 @@ public class Player : MonoBehaviour
     public void Shoot()
     {
         original_pos = transform.position;
-        
+        audio_shoot.Play();
         //rigid.AddForce(new Vector3(0, 0, -slider.value));
         rigid.AddForce(transform.forward.normalized * slider.value);
         shot = true;
@@ -86,6 +90,7 @@ public class Player : MonoBehaviour
                 particles.GetComponent<ParticleSystemRenderer>().material = spawner.materials[this.color];
                 Instantiate(particles);//.GetComponent<ParticleSystem>().Play() ;
 
+                audio_match.Play();
                 //Debug.Log("Collision: " + gameObject.name);
                 //Debug.Log("Collision2: " + collision.gameObject.name);
 
@@ -96,6 +101,7 @@ public class Player : MonoBehaviour
             }
             else
             {
+                audio_error.Play();
                 GameController.gameOver = true;
             }
             //ResetPlayer();
