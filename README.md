@@ -1,4 +1,4 @@
-# ColorCatcher
+# Color Catcher
 
 A game made with [Unity](https://unity.com/) & [Vuforia](https://developer.vuforia.com/) for Augmented Reality assignment by [CITM](https://www.citm.upc.edu/) students.
 
