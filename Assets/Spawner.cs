@@ -33,7 +33,6 @@ public class Spawner : MonoBehaviour
 
     public bool level_up = false;
 
-
     void Update()
     {
         transform.Rotate(transform.up,angular_velocity);
