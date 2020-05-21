@@ -73,10 +73,10 @@ public class Player : MonoBehaviour
             {
                 points += 100;
                 score.text = "SCORE: " + points.ToString();
-                Debug.Log("Collision: " + gameObject.name);
-                Debug.Log("Collision2: " + collision.gameObject.name);
+                //Debug.Log("Collision: " + gameObject.name);
+                //Debug.Log("Collision2: " + collision.gameObject.name);
 
-                spawner.balls.RemoveAt(spawner.balls.Count-1);
+                spawner.balls.Remove(collision.gameObject);
 
                 if (spawner.balls.Count <= 0)
                     spawner.level_up = true;

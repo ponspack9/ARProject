@@ -41,12 +41,12 @@ public class Spawner : MonoBehaviour
         transform.position = new Vector3(marker.transform.position.x, player.transform.position.y, marker.transform.position.z);
 
         //time += Time.deltaTime;
-        time += Time.deltaTime;
-        GetComponent<MeshRenderer>().material.SetFloat("_OFFSET", time);
-        if (time >= 10000)
-        {
-            time = 0;
-        }
+        //time += Time.deltaTime;
+        //GetComponent<MeshRenderer>().material.SetFloat("_OFFSET", time);
+        //if (time >= 10000)
+        //{
+        //    time = 0;
+        //}
         if (level_up)
         {
             Invoke("LevelUp", 1.5f);
